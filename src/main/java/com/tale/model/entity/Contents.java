@@ -106,4 +106,7 @@ public class Contents extends Model {
 
     @Ignore
     private String url;
+
+    @Ignore
+    private String authorName;
 }

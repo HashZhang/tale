@@ -11,6 +11,7 @@ import com.tale.model.dto.Types;
 import com.tale.model.entity.Comments;
 import com.tale.model.entity.Contents;
 import com.tale.model.entity.Metas;
+import com.tale.model.entity.Users;
 import com.tale.service.SiteService;
 import com.tale.utils.TaleUtils;
 import io.github.biezhi.anima.enums.OrderBy;
@@ -238,6 +239,12 @@ public final class Theme {
     public static String views() {
         Contents contents = current_article();
         return null != contents ? contents.getHits().toString() : "0";
+    }
+
+    public static String author() {
+        Contents contents = current_article();
+        Users users = select().from(Users.class).byId(contents.getAuthorId());
+        return users.getScreenName();
     }
 
     /**
