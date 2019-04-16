@@ -8,6 +8,7 @@ import com.blade.kit.StringKit;
 import com.tale.model.dto.Types;
 import com.tale.model.entity.Comments;
 import com.tale.model.entity.Contents;
+import com.tale.model.entity.Events;
 import com.tale.model.entity.Relationships;
 import com.tale.model.params.ArticleParam;
 import com.vdurmont.emoji.EmojiParser;
@@ -30,6 +31,9 @@ public class ContentsService {
 
     @Inject
     private MetasService metasService;
+
+    @Inject
+    private EventsService eventsService;
 
     /**
      * 根据id或slug获取文章
@@ -117,6 +121,7 @@ public class ContentsService {
             deleteById(Contents.class, cid);
             Anima.delete().from(Relationships.class).where(Relationships::getCid, cid).execute();
             Anima.delete().from(Comments.class).where(Comments::getCid, cid).execute();
+            Anima.delete().from(Events.class).where(Events::getJid, cid).execute();
         }
     }
 
