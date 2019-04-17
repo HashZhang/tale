@@ -8,6 +8,9 @@ import com.tale.utils.TaleUtils;
 import com.vdurmont.emoji.EmojiParser;
 import io.github.biezhi.anima.page.Page;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -212,7 +215,7 @@ public final class Commons {
      */
     public static String fmtdate(Integer unixTime, String patten) {
         if (null != unixTime && StringKit.isNotBlank(patten)) {
-            return DateKit.toString(unixTime, patten);
+            return Instant.ofEpochSecond(unixTime).atZone(ZoneId.of("Asia/Shanghai")).format(DateTimeFormatter.ofPattern(patten));
         }
         return "";
     }

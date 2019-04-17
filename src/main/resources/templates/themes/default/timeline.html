@@ -9,7 +9,7 @@
             </div><!-- cd-timeline-img -->
 
             <div class="cd-timeline-content">
-                <h2>${event.getTitle()}</h2>
+                <h2><a href="${event.getUrl()}">${event.getTitle()}</a></h2>
                 <p>${event.getDescription()}</p>
                 <img src="${event.getImg()}">
                 <span class="cd-date">${event.getFormattedDateTime()}</span>

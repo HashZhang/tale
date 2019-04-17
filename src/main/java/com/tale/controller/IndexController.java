@@ -14,6 +14,7 @@ import com.tale.model.dto.Types;
 import com.tale.model.entity.Contents;
 import com.tale.model.entity.Events;
 import com.tale.model.params.PageParam;
+import com.tale.service.ContentsService;
 import com.tale.service.EventsService;
 import com.tale.service.SiteService;
 import com.tale.utils.TaleUtils;
@@ -42,6 +43,8 @@ public class IndexController extends BaseController {
     private SiteService siteService;
     @Inject
     private EventsService eventsService;
+    @Inject
+    private ContentsService contentsService;
 
     /**
      * 首页
@@ -129,11 +132,12 @@ public class IndexController extends BaseController {
         Page<Events> events = eventsService.getEvents(0, 10);
         events.getRows().forEach(event -> {
             if (event.getType() == Events.EventType.POST.getValue()) {
-                Contents contents = select().from(Contents.class).byId(event.getJid());
+                Contents contents = contentsService.getContents(event.getJid().toString());
                 event.setImg(show_thumb(contents));
                 event.setTitle(contents.getTitle());
                 event.setDescription(intro(contents.getContent(), 75));
                 event.setIcon(theme_url(Events.EventType.POST.getIcon()));
+                event.setUrl(contents.getUrl());
             } else {
                 for (Events.EventType eventType : Events.EventType.values()) {
                     if (eventType.getValue() == event.getType()) {

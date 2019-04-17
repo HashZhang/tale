@@ -80,7 +80,7 @@ public class ContentsService {
         metasService.saveMetas(cid, tags, Types.TAG);
         metasService.saveMetas(cid, categories, Types.CATEGORY);
 
-        eventsService.savePostEvents(cid);
+        eventsService.savePostEvents(cid, time);
 
         return cid;
     }

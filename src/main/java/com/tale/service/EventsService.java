@@ -11,12 +11,12 @@ import static io.github.biezhi.anima.Anima.select;
 
 @Bean
 public class EventsService {
-    public void savePostEvents(Integer pid) {
+    public void savePostEvents(Integer pid, int time) {
         Events events = new Events();
         events.setJid(pid);
         events.setType(Events.EventType.POST.getValue());
         events.setDescription(Events.EventType.POST.getTitle());
-        events.setCreated(DateKit.nowUnix());
+        events.setCreated(time);
         events.save();
     }
 

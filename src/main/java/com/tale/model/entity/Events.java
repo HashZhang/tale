@@ -67,4 +67,6 @@ public class Events extends Model {
     private String icon;
     @Ignore
     private String formattedDateTime;
+    @Ignore
+    private String url;
 }
