@@ -68,9 +68,7 @@ public class ContentsService {
         contents.setContent(EmojiParser.parseToAliases(contents.getContent()));
 
         int time = DateKit.nowUnix();
-        if (contents.getCreated() == null) {
-            contents.setCreated(time);
-        }
+        contents.setCreated(time);
         contents.setModified(time);
         contents.setHits(0);
 
@@ -82,7 +80,7 @@ public class ContentsService {
         metasService.saveMetas(cid, tags, Types.TAG);
         metasService.saveMetas(cid, categories, Types.CATEGORY);
 
-        eventsService.savePostEvents(cid, contents.getCreated());
+        eventsService.savePostEvents(cid);
 
         return cid;
     }
@@ -112,6 +110,8 @@ public class ContentsService {
 
         metasService.saveMetas(cid, tags, Types.TAG);
         metasService.saveMetas(cid, categories, Types.CATEGORY);
+
+        eventsService.updatePostEvents(cid, contents.getCreated());
     }
 
     /**

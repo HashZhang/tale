@@ -2,22 +2,33 @@ package com.tale.service;
 
 import com.blade.ioc.annotation.Bean;
 import com.blade.kit.DateKit;
+import com.tale.model.entity.Contents;
 import com.tale.model.entity.Events;
 import io.github.biezhi.anima.Anima;
+import io.github.biezhi.anima.core.AnimaQuery;
 import io.github.biezhi.anima.page.Page;
+
+import java.util.List;
 
 import static com.tale.bootstrap.TaleConst.SQL_QUERY_EVENTS;
 import static io.github.biezhi.anima.Anima.select;
 
 @Bean
 public class EventsService {
-    public void savePostEvents(Integer pid, int time) {
+    public void savePostEvents(Integer pid) {
         Events events = new Events();
         events.setJid(pid);
         events.setType(Events.EventType.POST.getValue());
         events.setDescription(Events.EventType.POST.getTitle());
-        events.setCreated(time);
         events.save();
+    }
+
+    public void updatePostEvents(Integer pid, Integer created) {
+        Events events = new Events();
+        events.setJid(pid);
+        events.setCreated(created);
+        List<Events> all = select().from(Events.class).where(Events::getJid, pid).all();
+        events.updateById(all.get(0).getEid());
     }
 
     public void addEvents(int type, String description, String img) {
