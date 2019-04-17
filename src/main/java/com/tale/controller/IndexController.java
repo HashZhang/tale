@@ -147,7 +147,7 @@ public class IndexController extends BaseController {
                     }
                 }
             }
-            event.setFormattedDateTime(Commons.fmtdate(event.getCreated(), "yyyy-MM-dd hh:mm:ss"));
+            event.setFormattedDateTime(Commons.fmtdate(event.getCreated(), "yyyy-MM-dd"));
         });
         request.attribute("events", events);
         return this.render("timeline");

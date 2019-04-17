@@ -68,7 +68,9 @@ public class ContentsService {
         contents.setContent(EmojiParser.parseToAliases(contents.getContent()));
 
         int time = DateKit.nowUnix();
-        contents.setCreated(time);
+        if (contents.getCreated() == null) {
+            contents.setCreated(time);
+        }
         contents.setModified(time);
         contents.setHits(0);
 
@@ -80,7 +82,7 @@ public class ContentsService {
         metasService.saveMetas(cid, tags, Types.TAG);
         metasService.saveMetas(cid, categories, Types.CATEGORY);
 
-        eventsService.savePostEvents(cid, time);
+        eventsService.savePostEvents(cid, contents.getCreated());
 
         return cid;
     }
