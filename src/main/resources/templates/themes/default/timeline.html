@@ -29,32 +29,32 @@
             });
             var $top =  $(this);
             //on scolling, show/animate timeline blocks when enter the viewport
-            $(window).on('scroll', function(){
-                $timeline_block.each(function(){
-                    if( $(this).offset().top <= $(window).scrollTop()+$(window).height()*0.75 && $(this).find('.cd-timeline-img').hasClass('is-hidden') ) {
-                        $(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('is-hidden').addClass('bounce-in');
-                    }
-                });
-
-                var $this =$(this),
-                    viewH =$(this).height(),//可见高度
-                    contentH = $(document).height(),//内容高度
-                    scrollTop =$(this).scrollTop();//滚动高度
-                if(contentH == viewH + scrollTop) { //当滚动到底部时，
-                    $top.find('.cd-container').append('<div class="cd-timeline-block">\n' +
-                        '            <div class="cd-timeline-img cd-movie is-hidden">\n' +
-                        '                <i aria-hidden="true" class="fa fa-comments"></i>\n' +
-                        '            </div> <!-- cd-timeline-img -->\n' +
-                        '\n' +
-                        '            <div class="cd-timeline-content is-hidden">\n' +
-                        '                <h2>17素材网 6576576</h2>\n' +
-                        '                <p>17素材网专注于提供免费素材下载,其内容涵盖设计素材,PSD素材,矢量素材,图片素材,图标素材,设计字体等免费素材.下载免费素材尽在17素材网免费素材网</p>\n' +
-                        '                <a href="http://www.sucaijiayuan.com/" class="cd-read-more">阅读更多</a>\n' +
-                        '                <span class="cd-date">Feb 26</span>\n' +
-                        '            </div> <!-- cd-timeline-content -->\n' +
-                        '        </div> <!-- cd-timeline-block -->')
-                }
-            });
+            // $(window).on('scroll', function(){
+            //     $timeline_block.each(function(){
+            //         if( $(this).offset().top <= $(window).scrollTop()+$(window).height()*0.75 && $(this).find('.cd-timeline-img').hasClass('is-hidden') ) {
+            //             $(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('is-hidden').addClass('bounce-in');
+            //         }
+            //     });
+            //
+            //     var $this =$(this),
+            //         viewH =$(this).height(),//可见高度
+            //         contentH = $(document).height(),//内容高度
+            //         scrollTop =$(this).scrollTop();//滚动高度
+            //     if(contentH == viewH + scrollTop) { //当滚动到底部时，
+            //         $top.find('.cd-container').append('<div class="cd-timeline-block">\n' +
+            //             '            <div class="cd-timeline-img cd-movie is-hidden">\n' +
+            //             '                <i aria-hidden="true" class="fa fa-comments"></i>\n' +
+            //             '            </div> <!-- cd-timeline-img -->\n' +
+            //             '\n' +
+            //             '            <div class="cd-timeline-content is-hidden">\n' +
+            //             '                <h2>17素材网 6576576</h2>\n' +
+            //             '                <p>17素材网专注于提供免费素材下载,其内容涵盖设计素材,PSD素材,矢量素材,图片素材,图标素材,设计字体等免费素材.下载免费素材尽在17素材网免费素材网</p>\n' +
+            //             '                <a href="http://www.sucaijiayuan.com/" class="cd-read-more">阅读更多</a>\n' +
+            //             '                <span class="cd-date">Feb 26</span>\n' +
+            //             '            </div> <!-- cd-timeline-content -->\n' +
+            //             '        </div> <!-- cd-timeline-block -->')
+            //     }
+            // });
 
 
         });

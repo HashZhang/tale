@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.ZoneId;
+import java.util.TimeZone;
 
 import static com.tale.bootstrap.TaleConst.CLASSPATH;
 
@@ -26,6 +28,7 @@ public final class TaleLoader {
         TaleLoader.blade = blade;
         loadPlugins();
         loadThemes();
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
     }
 
     public static void loadThemes() {
