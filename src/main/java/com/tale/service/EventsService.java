@@ -24,11 +24,10 @@ public class EventsService {
     }
 
     public void updatePostEvents(Integer pid, Integer created) {
-        Events events = new Events();
-        events.setJid(pid);
-        events.setCreated(created);
         List<Events> all = select().from(Events.class).where(Events::getJid, pid).all();
-        events.updateById(all.get(0).getEid());
+        Events events = all.get(0);
+        events.setCreated(created);
+        events.updateById(events.getEid());
     }
 
     public void addEvents(int type, String description, String img) {
