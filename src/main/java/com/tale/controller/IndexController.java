@@ -1,16 +1,20 @@
 package com.tale.controller;
 
 import com.blade.ioc.annotation.Inject;
+import com.blade.kit.StringKit;
 import com.blade.mvc.RouteContext;
 import com.blade.mvc.annotation.*;
 import com.blade.mvc.http.Request;
 import com.blade.mvc.http.Response;
 import com.blade.mvc.http.Session;
 import com.tale.bootstrap.TaleConst;
+import com.tale.extension.Commons;
 import com.tale.model.dto.Archive;
 import com.tale.model.dto.Types;
 import com.tale.model.entity.Contents;
+import com.tale.model.entity.Events;
 import com.tale.model.params.PageParam;
+import com.tale.service.EventsService;
 import com.tale.service.SiteService;
 import com.tale.utils.TaleUtils;
 import io.github.biezhi.anima.enums.OrderBy;
@@ -19,6 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+import static com.tale.extension.Commons.theme_url;
+import static com.tale.extension.Theme.intro;
+import static com.tale.extension.Theme.show_thumb;
 import static io.github.biezhi.anima.Anima.select;
 
 /**
@@ -33,6 +40,8 @@ public class IndexController extends BaseController {
 
     @Inject
     private SiteService siteService;
+    @Inject
+    private EventsService eventsService;
 
     /**
      * 首页
@@ -113,6 +122,31 @@ public class IndexController extends BaseController {
         request.attribute("archives", archives);
         request.attribute("is_archive", true);
         return this.render("archives");
+    }
+
+    @GetRoute(value = {"timeline", "timeline.html"})
+    public String timeline(Request request) {
+        Page<Events> events = eventsService.getEvents(0, 10);
+        events.getRows().forEach(event -> {
+            if (event.getType() == Events.EventType.POST.getValue()) {
+                Contents contents = select().from(Contents.class).byId(event.getJid());
+                event.setImg(show_thumb(contents));
+                event.setTitle(contents.getTitle());
+                event.setDescription(intro(contents.getContent(), 75));
+                event.setIcon(theme_url(Events.EventType.POST.getIcon()));
+            } else {
+                for (Events.EventType eventType : Events.EventType.values()) {
+                    if (eventType.getValue() == event.getType()) {
+                        event.setIcon(theme_url(eventType.getIcon()));
+                        event.setTitle(eventType.getTitle());
+                        break;
+                    }
+                }
+            }
+            event.setFormattedDateTime(Commons.fmtdate(event.getCreated(), "yyyy-MM-dd hh:mm:ss"));
+        });
+        request.attribute("events", events);
+        return this.render("timeline");
     }
 
     /**

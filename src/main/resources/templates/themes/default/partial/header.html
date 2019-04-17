@@ -14,6 +14,7 @@
     <link rel="apple-touch-icon" href="${theme_url('/static/img/apple-touch-icon.png')}"/>
     <title>${head_title()}</title>
     <link href="${theme_url('/static/css/default.min.css')}" rel="stylesheet">
+    <link href="${theme_url('/static/css/timeline.css')}" rel="stylesheet">
     <link href="${theme_url('/static/css/style.min.css')}" rel="stylesheet">
     #if(allow_cloud_CDN() == "true")
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -44,9 +45,8 @@
             #end
         </a>
         <div class="navbar-menu">
-            <a href="${site_url('/archives')}">归档</a>
-            <a href="${site_url('/links')}">友链</a>
-            <a href="${site_url('/about')}">关于</a>
+            <a href="${site_url('/timeline')}">爱的历程</a>
+            <a href="${site_url('/archives')}">日记归档</a>
         </div>
         <div class="navbar-search" onclick="">
             <span class="icon-search"></span>
@@ -60,9 +60,8 @@
         <div class="navbar-mobile-menu" onclick="">
             <span class="icon-menu cross"><span class="middle"></span></span>
             <ul>
-                <li><a href="${site_url('/archives')}">归档</a></li>
-                <li><a href="${site_url('/links')}">友链</a></li>
-                <li><a href="${site_url('/about')}">关于</a></li>
+                <li><a href="${site_url('/timeline')}">爱的历程</a></li>
+                <li><a href="${site_url('/archives')}">日记归档</a></li>
             </ul>
         </div>
     </div>
