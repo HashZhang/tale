@@ -19,6 +19,7 @@ public class EventsService {
         Events events = new Events();
         events.setJid(pid);
         events.setType(Events.EventType.POST.getValue());
+        events.setCreated(DateKit.nowUnix());
         events.setDescription(Events.EventType.POST.getTitle());
         events.save();
     }

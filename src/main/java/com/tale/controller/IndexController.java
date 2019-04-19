@@ -129,26 +129,7 @@ public class IndexController extends BaseController {
 
     @GetRoute(value = {"timeline", "timeline.html"})
     public String timeline(Request request) {
-        Page<Events> events = eventsService.getEvents(0, 10);
-        events.getRows().forEach(event -> {
-            if (event.getType() == Events.EventType.POST.getValue()) {
-                Contents contents = contentsService.getContents(event.getJid().toString());
-                event.setImg(show_thumb(contents));
-                event.setTitle(contents.getTitle());
-                event.setDescription(intro(contents.getContent(), 75));
-                event.setIcon(theme_url(Events.EventType.POST.getIcon()));
-                event.setUrl(contents.getUrl());
-            } else {
-                for (Events.EventType eventType : Events.EventType.values()) {
-                    if (eventType.getValue() == event.getType()) {
-                        event.setIcon(theme_url(eventType.getIcon()));
-                        event.setTitle(eventType.getTitle());
-                        break;
-                    }
-                }
-            }
-            event.setFormattedDateTime(Commons.fmtdate(event.getCreated(), "yyyy-MM-dd"));
-        });
+        Page<Events> events = getEvents(1, 10);
         request.attribute("events", events);
         return this.render("timeline");
     }
@@ -207,4 +188,34 @@ public class IndexController extends BaseController {
         TaleUtils.logout(context);
     }
 
+
+    @GetRoute(value = "timeline/:page/:limit")
+    public void getTimelines(@PathParam int page, @Param(defaultValue = "10") int limit, Response response) {
+        Page<Events> events = getEvents(page, limit);
+        response.json(events.getRows());
+    }
+
+    private Page<Events> getEvents(int page, int limit) {
+        Page<Events> events = eventsService.getEvents(page, limit);
+        events.getRows().forEach(event -> {
+            if (event.getType() == Events.EventType.POST.getValue()) {
+                Contents contents = contentsService.getContents(event.getJid().toString());
+                event.setImg(show_thumb(contents));
+                event.setTitle(contents.getTitle());
+                event.setDescription(intro(contents.getContent(), 75));
+                event.setIcon(theme_url(Events.EventType.POST.getIcon()));
+                event.setUrl(contents.getUrl());
+            } else {
+                for (Events.EventType eventType : Events.EventType.values()) {
+                    if (eventType.getValue() == event.getType()) {
+                        event.setIcon(theme_url(eventType.getIcon()));
+                        event.setTitle(eventType.getTitle());
+                        break;
+                    }
+                }
+            }
+            event.setFormattedDateTime(Commons.fmtdate(event.getCreated(), "yyyy-MM-dd"));
+        });
+        return events;
+    }
 }
